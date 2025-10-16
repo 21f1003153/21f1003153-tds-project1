@@ -68,7 +68,7 @@ An **interactive quiz app** with the following features:
 
 **Monalisa Kisku**  
 🎓 _Student ID: 21f1003153_  
-💼 _TDS Project – Stage 2: LLM App Deployment_  
+💼 _TDS Project – 1: LLM App Deployment_  
 
 ---
 
