@@ -1,71 +1,85 @@
-Here’s a simple, standalone HTML document featuring an interactive quiz app with three questions. It uses inline JavaScript for functionality and provides a minimal, readable code structure:
+Here's a simple HTML and JavaScript single-page quiz application following your requirements:
 
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Simple Quiz App</title>
-<style>
-  body { font-family: Arial, sans-serif; padding: 20px; }
-  .question { margin-bottom: 15px; }
-  button { padding: 8px 16px; font-size: 16px; cursor: pointer; }
-  #submit { display: none; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Quiz App</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .question { margin-bottom: 20px; }
+    </style>
 </head>
 <body>
-<h2>Quick Quiz</h2>
+    <h1>Simple Quiz App</h1>
+    <div id="quiz-container">
+        <div class="question">
+            <p>What is the capital of France?</p>
+            <input type="radio" id="paris" name="q1" value="Paris">
+            <label for="paris">Paris</label><br>
+            <input type="radio" id="rome" name="q1" value="Rome">
+            <label for="rome">Rome</label><br>
+            <input type="radio" id="madrid" name="q1" value="Madrid">
+            <label for="madrid">Madrid</label>
+        </div>
+        <div class="question">
+            <p>What is 3 + 2?</p>
+            <input type="radio" id="four" name="q2" value="4">
+            <label for="four">4</label><br>
+            <input type="radio" id="five" name="q2" value="5">
+            <label for="five">5</label><br>
+            <input type="radio" id="six" name="q2" value="6">
+            <label for="six">6</label>
+        </div>
+        <div class="question">
+            <p>Which element's chemical symbol is O?</p>
+            <input type="radio" id="oxygen" name="q3" value="Oxygen">
+            <label for="oxygen">Oxygen</label><br>
+            <input type="radio" id="gold" name="q3" value="Gold">
+            <label for="gold">Gold</label><br>
+            <input type="radio" id="hydrogen" name="q3" value="Hydrogen">
+            <label for="hydrogen">Hydrogen</label>
+        </div>
+        <button onclick="calculateScore()">Submit</button>
+        <div id="result"></div>
+    </div>
 
-<div id="quiz-form">
-  <div class="question">
-    <p>1. What is the capital of France?</p>
-    <input type="radio" name="q1" value="Paris" id="q1a"><label for="q1a">Paris</label><br>
-    <input type="radio" name="q1" value="Rome" id="q1b"><label for="q1b">Rome</label><br>
-    <input type="radio" name="q1" value="Berlin" id="q1c"><label for="q1c">Berlin</label>
-  </div>
-  
-  <div class="question">
-    <p>2. What is the largest planet in our solar system?</p>
-    <input type="radio" name="q2" value="Venus" id="q2a"><label for="q2a">Venus</label><br>
-    <input type="radio" name="q2" value="Saturn" id="q2b"><label for="q2b">Saturn</label><br>
-    <input type="radio" name="q2" value="Jupiter" id="q2c"><label for="q2c">Jupiter</label>
-  </div>
-  
-  <div class="question">
-    <p>3. Which element's chemical symbol is O?</p>
-    <input type="radio" name="q3" value="Gold" id="q3a"><label for="q3a">Gold</label><br>
-    <input type="radio" name="q3" value="Oxygen" id="q3b"><label for="q3b">Oxygen</label><br>
-    <input type="radio" name="q3" value="Silver" id="q3c"><label for="q3c">Silver</label>
-  </div>
-  
-  <button onclick="calculateScore()">Submit Answers</button>
-</div>
+    <script>
+        function calculateScore() {
+            var score = 0;
+            var totalQuestions = 3;
 
-<div id="result"></div>
+            // Answers
+            var correctAnswers = {
+                "q1": "Paris",
+                "q2": "5",
+                "q3": "Oxygen"
+            };
 
-<script>
-function calculateScore() {
-  var score = 0;
-  var totalQuestions = 3;
-  var answer1 = document.querySelector('input[name="q1"]:checked');
-  var answer2 = document.querySelector('input[name="q2"]:checked');
-  var answer3 = document.querySelector('input[name="q3"]:checked');
+            for (var question in correctAnswers) {
+                var answers = document.getElementsByName(question);
+                for (var i = 0; i < answers.length; i++) {
+                    if (answers[i].checked) {
+                        if (answers[i].value === correctAnswers[question]) {
+                            score++;
+                        }
+                    }
+                }
+            }
 
-  if (answer1 && answer1.value === "Paris") score++;
-  if (answer2 && answer2.value === "Jupiter") score++;
-  if (answer3 && answer3.value === "Oxygen") score++;
-
-  document.getElementById("result").textContent = "You scored " + score + " out of " + totalQuestions;
-  document.getElementById("quiz-form").style.display = "none"; // Hide quiz after submission
-}
-</script>
+            var resultText = "Your score is " + score + " out of " + totalQuestions;
+            document.getElementById("result").innerText = resultText;
+        }
+    </script>
 </body>
 </html>
 
-
 ### Breakdown of the Code:
-- **HTML**: Structured with question sets encapsulated in individual divs for clarity. Each set of questions includes radio inputs for answer options.
-- **CSS**: Provides basic styling for the body text and spacing for components.
-- **JavaScript**: Contained in a script tag, it includes a function `calculateScore()` that checks the answers, calculates the score, and updates the page with the result. The quiz form is hidden after submission to show only the results.
 
-This app is functional and user-friendly, meeting all the specified requirements.
+1. **HTML Structure**: The quiz is structured within `div` elements containing a series of questions, each with multiple choice answers in the form of radio buttons. The `name` attribute for radio buttons is used to group them, ensuring only one can be selected per question.
+
+2. **Styling**: Minimal CSS is used to improve readability and spacing.
+
+3. **JavaScript**: The script defines a `calculateScore` function triggered on clicking the submit button. It checks user responses against correct answers and calculates the total score, updating the displayed result accordingly.
