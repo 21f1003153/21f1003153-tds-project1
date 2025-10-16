@@ -2,87 +2,135 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Quiz Time!</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz App</title>
 <style>
   body {
-    font-family: Arial, sans-serif;
     background-color: white;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    margin: 0;
   }
-  .quiz-box {
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    border-radius: 8px;
-    width: 300px;
+
+  .container {
+    width: 90%;
+    max-width: 600px;
+    margin: auto;
+    text-align: center;
   }
-  .button {
+
+  .header-button {
+    background-color: blue;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 24px;
+    cursor: pointer;
+  }
+
+  .question {
+    margin: 20px 0;
+    text-align: left;
+  }
+
+  .options {
+    margin-left: 20px;
+  }
+
+  input[type="radio"] {
+    margin-bottom: 10px;
+  }
+
+  .submit-button, .retake-button {
     background-color: blue;
     color: white;
     border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
+    padding: 10px 20px;
     cursor: pointer;
-    display: block;
-    width: 100%;
-    margin-top: 20px;
+    font-size: 20px;
+    border-radius: 5px;
   }
+
   .results {
-    text-align: center;
+    font-size: 20px;
     margin-top: 20px;
   }
 </style>
 </head>
 <body>
-<div class="quiz-box">
-  <form id="quizForm">
-    <div>
-      <p>1. What is the capital of France?</p>
-      <input type="radio" id="paris" name="q1" value="Paris"><label for="paris">Paris</label><br>
-      <input type="radio" id="london" name="q1" value="London"><label for="london">London</label><br>
-      <input type="radio" id="berlin" name="q1" value="Berlin"><label for="berlin">Berlin</label><br>
+<div class="container">
+  <button class="header-button" disabled>Quiz Time!</button>
+  <div id="quiz">
+    <form id="quizForm">
+      <div class="question">
+        Question 1: What is the capital of France?
+        <div class="options">
+          <label><input type="radio" name="q1" value="Paris"/> Paris</label><br>
+          <label><input type="radio" name="q1" value="London"/> London</label><br>
+          <label><input type="radio" name="q1" value="Berlin"/> Berlin</label>
+        </div>
+      </div>
+      <div class="question">
+        Question 2: 2 + 2 equals?
+        <div class="options">
+          <label><input type="radio" name="q2" value="3"/> 3</label><br>
+          <label><input type="radio" name="q2" value="4"/> 4</label><br>
+          <label><input type="radio" name="q2" value="5"/> 5</label>
+        </div>
+      </div>
+      <div class="question">
+        Question 3: Who wrote '1984'?
+        <div class="options">
+          <label><input type="radio" name="q3" value="George Orwell"/> George Orwell</label><br>
+          <label><input type="radio" name="q3" value="Aldous Huxley"/> Aldous Huxley</label><br>
+          <label><input type="radio" name="q3" value="Stephen King"/> Stephen King</label>
+        </div>
+      </div>
+      <button type="button" class="submit-button" onclick="submitQuiz()">Submit</button>
+    </form>
+    <div class="results" style="display: none;">
+      <p id="scoreText"></p>
+      <button class="retake-button" onclick="retakeQuiz()">Retake Quiz</button>
     </div>
-    <div>
-      <p>2. What is 5 + 3?</p>
-      <input type="radio" id="eight" name="q2" value="8"><label for="eight">8</label><br>
-      <input type="radio" id="seven" name="q2" value="7"><label for="seven">7</label><br>
-      <input type="radio" id="six" name="q2" value="6"><label for="six">6</label><br>
-    </div>
-    <div>
-      <p>3. Which is a programming language?</p>
-      <input type="radio" id="java" name="q3" value="Java"><label for="java">Java</label><br>
-      <input type="radio" id="english" name="q3" value="English"><label for="english">English</label><br>
-      <input type="radio" id="latin" name="q3" value="Latin"><label for="latin">Latin</label><br>
-    </div>
-    <button type="button" class="button" onclick="submitQuiz()">Submit Answers</button>
-  </form>
-  <div id="result" class="results"></div>
-  <button type="button" class="button" onclick="retakeQuiz()" style="display:none;">Retake Quiz</button>
+  </div>
 </div>
+
 <script>
   function submitQuiz() {
-    var score = 0;
-    if (document.getElementById('paris').checked) score++;
-    if (document.getElementById('eight').checked) score++;
-    if (document.getElementById('java').checked) score++;
+    const answers = {
+      q1: "Paris",
+      q2: "4",
+      q3: "George Orwell"
+    };
 
-    document.getElementById('result').innerHTML = "Your score: " + score + "/3";
+    let score = 0;
+    const totalQuestions = 3;
+
+    Object.keys(answers).forEach((question, index) => {
+      const userAnswer = document.querySelector(`input[name="${question}"]:checked`);
+      if (userAnswer && userAnswer.value === answers[question]) {
+        score++;
+      }
+    });
+
+    document.getElementById('scoreText').innerText = `You scored ${score} out of ${totalQuestions}`;
     document.getElementById('quizForm').style.display = 'none';
-    document.querySelector('.button').style.display = 'none';
-    document.querySelectorAll('.button')[1].style.display = 'block';
+    document.querySelector('.results').style.display = 'block';
   }
 
   function retakeQuiz() {
-    document.getElementById('quizForm').reset();
     document.getElementById('quizForm').style.display = 'block';
-    document.querySelector('.button').style.display = 'block';
-    document.querySelectorAll('.button')[1].style.display = 'none';
-    document.getElementById('result').innerHTML = '';
+    document.querySelector('.results').style.display = 'none';
+    document.querySelectorAll('input[type="radio"]').forEach(input => {
+      input.checked = false;
+    });
   }
 </script>
+
 </body>
 </html>
