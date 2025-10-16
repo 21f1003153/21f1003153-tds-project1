@@ -1,107 +1,124 @@
-Here is a simple single-page HTML and JavaScript quiz app that fulfills your requirements:
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Quiz Time!</title>
 <style>
-    body {
-        font-family: Arial, sans-serif;
-        background: linear-gradient(limegreen, lightgreen);
-        height: 100vh;
-        margin: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    .quiz-container {
-        background: white;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        padding: 20px;
-        width: 300px;
-        text-align: center;
-    }
-    h1 {
-        color: blue;
-        background-color: limegreen;
-        padding: 10px;
-    }
-    button {
-        background-color: blue;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        padding: 10px 20px;
-        margin-top: 20px;
-        cursor: pointer;
-    }
-    button:hover {
-        background-color: darkblue;
-    }
+  body, html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+  }
+  body {
+    background: linear-gradient(to bottom right, #32CD32, #A8E063);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  #quiz-container {
+    background: linear-gradient(to bottom right, #90EE90, #B2E277);
+    width: 100%;
+    max-width: 500px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  .title-bar {
+    background-color: #0000FF;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    font-weight: bold;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+  .question {
+    margin: 20px 0;
+  }
+  .options {
+    padding-left: 20px;
+  }
+  .submit-btn, .retake-btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #0000FF;
+    color: #32CD32;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    margin-top: 20px;
+    font-size: 16px;
+  }
+  .results {
+    text-align: center;
+    font-size: 20px;
+    margin-top: 20px;
+  }
 </style>
 </head>
 <body>
-<div class="quiz-container">
-    <h1>Simple Quiz App</h1>
-    <div id="quiz">
-        <div id="question"></div>
-        <button id="btn0"></button>
-        <button id="btn1"></button>
-        <button id="btn2"></button>
-        <button id="btn3"></button>
+<div id="quiz-container">
+  <div class="title-bar">Quiz Time!</div>
+  
+  <form id="quiz-form">
+    <div class="question">
+      <p>What color is the sun?</p>
+      <div class="options">
+        <input type="radio" id="sun-yellow" name="sun-color" value="Yellow"><label for="sun-yellow">Yellow</label><br>
+        <input type="radio" id="sun-red" name="sun-color" value="Red"><label for="sun-red">Red</label>
+      </div>
     </div>
+    
+    <div class="question">
+      <p>What is 2 + 2?</p>
+      <div class="options">
+        <input type="radio" id="four" name="two-plus-two" value="4"><label for="four">4</label><br>
+        <input type="radio" id="five" name="two-plus-two" value="5"><label for="five">5</label>
+      </div>
+    </div>
+    
+    <div class="question">
+      <p>Which language is used to style web pages?</p>
+      <div class="options">
+        <input type="radio" id="css" name="web-style" value="CSS"><label for="css">CSS</label><br>
+        <input type="radio" id="html" name="web-style" value="HTML"><label for="html">HTML</label>
+      </div>
+    </div>
+    
+    <button type="button" class="submit-btn" onclick="submitQuiz()">Submit Answers</button>
+  </form>
+  
+  <div class="results" id="results"></div>
 </div>
 
 <script>
-const questions = [
-    {
-        question: "What is the capital of France?",
-        answers: ["Paris", "London", "Madrid", "Berlin"],
-        correct: 0
-    },
-    {
-        question: "What is 2 + 2?",
-        answers: ["3", "4", "5", "22"],
-        correct: 1
-    },
-    {
-        question: "Which planet is known as the Red Planet?",
-        answers: ["Earth", "Venus", "Mars", "Jupiter"],
-        correct: 2
-    }
-];
-
-let currentQuestion = 0;
-let score = 0;
-
-function displayQuestion() {
-    const quiz = document.getElementById('quiz');
-    if (currentQuestion >= questions.length) {
-        quiz.innerHTML = `<h2>Quiz completed!</h2><p>Your score: ${score}</p>`;
-        return;
-    }
-    document.getElementById('question').textContent = questions[currentQuestion].question;
-    questions[currentQuestion].answers.forEach((answer, index) => {
-        const btn = document.getElementById('btn' + index);
-        btn.textContent = answer;
-        btn.onclick = () => checkAnswer(index);
-    });
+function submitQuiz() {
+  var score = 0;
+  var totalQuestions = 3;
+  var sunColor = document.querySelector('input[name="sun-color"]:checked');
+  var sumAnswer = document.querySelector('input[name="two-plus-two"]:checked');
+  var styleLang = document.querySelector('input[name="web-style"]:checked');
+  
+  if(sunColor && sunColor.value === "Yellow") score++;
+  if(sumAnswer && sumAnswer.value === "4") score++;
+  if(styleLang && styleLang.value === "CSS") score++;
+  
+  document.getElementById('quiz-form').style.display = 'none';
+  var results = document.getElementById('results');
+  results.innerHTML = "Your score: " + score + " out of " + totalQuestions + "<br><button class='retake-btn' onclick='retakeQuiz()'>Retake Quiz</button>";
 }
 
-function checkAnswer(index) {
-    if (index === questions[currentQuestion].correct) {
-        score++;
-    }
-    currentQuestion++;
-    displayQuestion();
+function retakeQuiz() {
+  var form = document.getElementById('quiz-form');
+  form.style.display = 'block';
+  form.reset();
+  document.getElementById('results').innerHTML = "";
 }
-
-displayQuestion();
 </script>
 </body>
 </html>
 
-
+This HTML and JavaScript code will create a single-page quiz app as specified. The quiz questions and answers are contained within HTML form elements. The results are calculated immediately upon submission without sending data to a server, and options are given to retake the quiz, rendering the app reactive to user inputs. It's styled to be visually appealing and focused on accessibility with its clear, contrasting colors and readable typography.
