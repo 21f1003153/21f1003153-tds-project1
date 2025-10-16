@@ -1,4 +1,4 @@
-Here's a simple HTML and JavaScript single-page quiz application following your requirements:
+Below is a simple standalone HTML document that includes an inline JavaScript quiz app. The quiz consists of three questions, and the user receives a score at the end.
 
 
 <!DOCTYPE html>
@@ -8,78 +8,70 @@ Here's a simple HTML and JavaScript single-page quiz application following your 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simple Quiz App</title>
     <style>
-        body { font-family: Arial, sans-serif; padding: 20px; }
-        .question { margin-bottom: 20px; }
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .question {
+            margin: 10px 0;
+        }
+        .result {
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
     <h1>Simple Quiz App</h1>
     <div id="quiz-container">
         <div class="question">
-            <p>What is the capital of France?</p>
-            <input type="radio" id="paris" name="q1" value="Paris">
-            <label for="paris">Paris</label><br>
-            <input type="radio" id="rome" name="q1" value="Rome">
-            <label for="rome">Rome</label><br>
-            <input type="radio" id="madrid" name="q1" value="Madrid">
-            <label for="madrid">Madrid</label>
+            <p>What is 2 + 2?</p>
+            <input type="radio" id="q1a1" name="q1" value="1"><label for="q1a1">3</label>
+            <input type="radio" id="q1a2" name="q1" value="2"><label for="q1a2">4</label>
+            <input type="radio" id="q1a3" name="q1" value="3"><label for="q1a3">5</label>
         </div>
         <div class="question">
-            <p>What is 3 + 2?</p>
-            <input type="radio" id="four" name="q2" value="4">
-            <label for="four">4</label><br>
-            <input type="radio" id="five" name="q2" value="5">
-            <label for="five">5</label><br>
-            <input type="radio" id="six" name="q2" value="6">
-            <label for="six">6</label>
+            <p>What color do you get by mixing red and white?</p>
+            <input type="radio" id="q2a1" name="q2" value="1"><label for="q2a1">Pink</label>
+            <input type="radio" id="q2a2" name="q2" value="2"><label for="q2a2">Purple</label>
+            <input type="radio" id="q2a3" name="q2" value="3"><label for="q2a3">Orange</label>
         </div>
         <div class="question">
-            <p>Which element's chemical symbol is O?</p>
-            <input type="radio" id="oxygen" name="q3" value="Oxygen">
-            <label for="oxygen">Oxygen</label><br>
-            <input type="radio" id="gold" name="q3" value="Gold">
-            <label for="gold">Gold</label><br>
-            <input type="radio" id="hydrogen" name="q3" value="Hydrogen">
-            <label for="hydrogen">Hydrogen</label>
+            <p>Which animal is known as the King of the Jungle?</p>
+            <input type="radio" id="q3a1" name="q3" value="1"><label for="q3a1">Elephant</label>
+            <input type="radio" id="q3a2" name="q3" value="2"><label for="q3a2">Lion</label>
+            <input type="radio" id="q3a3" name="q3" value="3"><label for="q3a3">Tiger</label>
         </div>
-        <button onclick="calculateScore()">Submit</button>
-        <div id="result"></div>
+        <button onclick="submitAnswers()">Submit</button>
     </div>
-
+    <div class="result" id="result">
+        <!-- Results will be displayed here -->
+    </div>
     <script>
-        function calculateScore() {
+        function submitAnswers() {
+            var total = 3;
             var score = 0;
-            var totalQuestions = 3;
+            
+            // Get user input
+            var q1 = document.querySelector('input[name="q1"]:checked') ? document.querySelector('input[name="q1"]:checked').value : "";
+            var q2 = document.querySelector('input[name="q2"]:checked') ? document.querySelector('input[name="q2"]:checked').value : "";
+            var q3 = document.querySelector('input[name="q3"]:checked') ? document.querySelector('input[name="q3"]:checked').value : "";
 
-            // Answers
-            var correctAnswers = {
-                "q1": "Paris",
-                "q2": "5",
-                "q3": "Oxygen"
-            };
+            // Check answers
+            if(q1 == "2") score++;
+            if(q2 == "1") score++;
+            if(q3 == "2") score++;
 
-            for (var question in correctAnswers) {
-                var answers = document.getElementsByName(question);
-                for (var i = 0; i < answers.length; i++) {
-                    if (answers[i].checked) {
-                        if (answers[i].value === correctAnswers[question]) {
-                            score++;
-                        }
-                    }
-                }
-            }
-
-            var resultText = "Your score is " + score + " out of " + totalQuestions;
-            document.getElementById("result").innerText = resultText;
+            // Display results
+            document.getElementById('result').innerHTML = '<h3>You scored ' + score + ' out of ' + total + '.</h3>';
         }
     </script>
 </body>
 </html>
 
-### Breakdown of the Code:
 
-1. **HTML Structure**: The quiz is structured within `div` elements containing a series of questions, each with multiple choice answers in the form of radio buttons. The `name` attribute for radio buttons is used to group them, ensuring only one can be selected per question.
+This HTML file contains all the elements needed for the interactive quiz. Each question has a set of radio buttons as options. Once the submit button is clicked, the JavaScript function `submitAnswers()` checks all the answers, calculates the score, and displays it. 
 
-2. **Styling**: Minimal CSS is used to improve readability and spacing.
-
-3. **JavaScript**: The script defines a `calculateScore` function triggered on clicking the submit button. It checks user responses against correct answers and calculates the total score, updating the displayed result accordingly.
+The application is styled minimally to keep it neat and readable. The styles are included in the `<head>` within `<style>` tags, and JavaScript is kept inline within `<script>` tags at the bottom of the `<body>`. This structure ensures that all parts of this small application are contained within a single HTML document, meeting the requirement for a standalone, self-contained app.
