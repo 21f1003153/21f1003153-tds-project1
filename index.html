@@ -1,77 +1,107 @@
-Below is a simple standalone HTML document that includes an inline JavaScript quiz app. The quiz consists of three questions, and the user receives a score at the end.
+Here is a simple single-page HTML and JavaScript quiz app that fulfills your requirements:
 
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Quiz App</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .question {
-            margin: 10px 0;
-        }
-        .result {
-            margin-top: 20px;
-        }
-    </style>
+<meta charset="UTF-8">
+<title>Quiz Time!</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(limegreen, lightgreen);
+        height: 100vh;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .quiz-container {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        padding: 20px;
+        width: 300px;
+        text-align: center;
+    }
+    h1 {
+        color: blue;
+        background-color: limegreen;
+        padding: 10px;
+    }
+    button {
+        background-color: blue;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        margin-top: 20px;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: darkblue;
+    }
+</style>
 </head>
 <body>
+<div class="quiz-container">
     <h1>Simple Quiz App</h1>
-    <div id="quiz-container">
-        <div class="question">
-            <p>What is 2 + 2?</p>
-            <input type="radio" id="q1a1" name="q1" value="1"><label for="q1a1">3</label>
-            <input type="radio" id="q1a2" name="q1" value="2"><label for="q1a2">4</label>
-            <input type="radio" id="q1a3" name="q1" value="3"><label for="q1a3">5</label>
-        </div>
-        <div class="question">
-            <p>What color do you get by mixing red and white?</p>
-            <input type="radio" id="q2a1" name="q2" value="1"><label for="q2a1">Pink</label>
-            <input type="radio" id="q2a2" name="q2" value="2"><label for="q2a2">Purple</label>
-            <input type="radio" id="q2a3" name="q2" value="3"><label for="q2a3">Orange</label>
-        </div>
-        <div class="question">
-            <p>Which animal is known as the King of the Jungle?</p>
-            <input type="radio" id="q3a1" name="q3" value="1"><label for="q3a1">Elephant</label>
-            <input type="radio" id="q3a2" name="q3" value="2"><label for="q3a2">Lion</label>
-            <input type="radio" id="q3a3" name="q3" value="3"><label for="q3a3">Tiger</label>
-        </div>
-        <button onclick="submitAnswers()">Submit</button>
+    <div id="quiz">
+        <div id="question"></div>
+        <button id="btn0"></button>
+        <button id="btn1"></button>
+        <button id="btn2"></button>
+        <button id="btn3"></button>
     </div>
-    <div class="result" id="result">
-        <!-- Results will be displayed here -->
-    </div>
-    <script>
-        function submitAnswers() {
-            var total = 3;
-            var score = 0;
-            
-            // Get user input
-            var q1 = document.querySelector('input[name="q1"]:checked') ? document.querySelector('input[name="q1"]:checked').value : "";
-            var q2 = document.querySelector('input[name="q2"]:checked') ? document.querySelector('input[name="q2"]:checked').value : "";
-            var q3 = document.querySelector('input[name="q3"]:checked') ? document.querySelector('input[name="q3"]:checked').value : "";
+</div>
 
-            // Check answers
-            if(q1 == "2") score++;
-            if(q2 == "1") score++;
-            if(q3 == "2") score++;
+<script>
+const questions = [
+    {
+        question: "What is the capital of France?",
+        answers: ["Paris", "London", "Madrid", "Berlin"],
+        correct: 0
+    },
+    {
+        question: "What is 2 + 2?",
+        answers: ["3", "4", "5", "22"],
+        correct: 1
+    },
+    {
+        question: "Which planet is known as the Red Planet?",
+        answers: ["Earth", "Venus", "Mars", "Jupiter"],
+        correct: 2
+    }
+];
 
-            // Display results
-            document.getElementById('result').innerHTML = '<h3>You scored ' + score + ' out of ' + total + '.</h3>';
-        }
-    </script>
+let currentQuestion = 0;
+let score = 0;
+
+function displayQuestion() {
+    const quiz = document.getElementById('quiz');
+    if (currentQuestion >= questions.length) {
+        quiz.innerHTML = `<h2>Quiz completed!</h2><p>Your score: ${score}</p>`;
+        return;
+    }
+    document.getElementById('question').textContent = questions[currentQuestion].question;
+    questions[currentQuestion].answers.forEach((answer, index) => {
+        const btn = document.getElementById('btn' + index);
+        btn.textContent = answer;
+        btn.onclick = () => checkAnswer(index);
+    });
+}
+
+function checkAnswer(index) {
+    if (index === questions[currentQuestion].correct) {
+        score++;
+    }
+    currentQuestion++;
+    displayQuestion();
+}
+
+displayQuestion();
+</script>
 </body>
 </html>
 
 
-This HTML file contains all the elements needed for the interactive quiz. Each question has a set of radio buttons as options. Once the submit button is clicked, the JavaScript function `submitAnswers()` checks all the answers, calculates the score, and displays it. 
-
-The application is styled minimally to keep it neat and readable. The styles are included in the `<head>` within `<style>` tags, and JavaScript is kept inline within `<script>` tags at the bottom of the `<body>`. This structure ensures that all parts of this small application are contained within a single HTML document, meeting the requirement for a standalone, self-contained app.
