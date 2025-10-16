@@ -1,83 +1,70 @@
-Below is a simple HTML page with embedded JavaScript that functions as a quiz app. This quiz consists of three questions and displays the final score upon completion.
+Below is a simple standalone HTML document containing a basic interactive quiz app. The app consists of 3 questions and displays the final score after all questions are answered. The JavaScript code handling the quiz logic is included inline within `<script>` tags. The app is minimalistic and straightforward, ensuring it is easy to follow and modify if needed.
 
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Simple Quiz App</title>
-<style>
-  body { font-family: Arial, sans-serif; padding: 20px; }
-  .question { margin-bottom: 20px; }
-  .result { margin-top: 20px; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Quiz App</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .question { margin-bottom: 20px; }
+        .btn { padding: 8px 16px; cursor: pointer; }
+    </style>
 </head>
 <body>
-<h2>Simple Quiz App</h2>
-<div id="quiz">
-  <div class="question">
-    <p>What is the capital of France?</p>
-    <input type="radio" name="q1" value="Paris" id="q1a"><label for="q1a">Paris</label><br>
-    <input type="radio" name="q1" value="London" id="q1b"><label for="q1b">London</label><br>
-    <input type="radio" name="q1" value="Rome" id="q1c"><label for="q1c">Rome</label>
-  </div>
-  <div class="question">
-    <p>What is 3 + 2?</p>
-    <input type="radio" name="q2" value="4" id="q2a"><label for="q2a">4</label><br>
-    <input type="radio" name="q2" value="5" id="q2b"><label for="q2b">5</label><br>
-    <input type="radio" name="q2" value="6" id="q2c"><label for="q2c">6</label>
-  </div>
-  <div class="question">
-    <p>Which planet is known as the Red Planet?</p>
-    <input type="radio" name="q3" value="Mars" id="q3a"><label for="q3a">Mars</label><br>
-    <input type="radio" name="q3" value="Jupiter" id="q3b"><label for="q3b">Jupiter</label><br>
-    <input type="radio" name="q3" value="Saturn" id="q3c"><label for="q3c">Saturn</label>
-  </div>
-  <button onclick="submitQuiz()">Submit Answers</button>
-  <div id="result" class="result"></div>
-</div>
+    <h2>Simple Quiz App</h2>
+    <div id="quiz-container">
 
-<script>
-function submitQuiz() {
-  const answers = {
-    q1: "Paris",
-    q2: "5",
-    q3: "Mars"
-  };
+        <!-- Questions will be inserted here dynamically -->
 
-  let score = 0;
-  Object.keys(answers).forEach((key, index) => {
-    const radios = document.getElementsByName(key);
-    for (let radio of radios) {
-      if (radio.checked) {
-        if (radio.value === answers[key]) {
-          score++;
+    </div>
+    <button class="btn" onclick="submitQuiz()">Submit Quiz</button>
+
+    <script>
+        const quizData = [
+            {
+                question: "What is the capital of France?",
+                options: ["Paris", "London", "Berlin", "Rome"],
+                answer: "Paris"
+            },
+            {
+                question: "Which planet is known as the Red Planet?",
+                options: ["Earth", "Mars", "Jupiter", "Saturn"],
+                answer: "Mars"
+            },
+            {
+                question: "What is the largest ocean on Earth?",
+                options: ["Atlantic Ocean", "Indian Ocean", "Arctic Ocean", "Pacific Ocean"],
+                answer: "Pacific Ocean"
+            }
+        ];
+
+        function loadQuiz() {
+            const container = document.getElementById('quiz-container');
+            container.innerHTML = '';
+            quizData.forEach((data, index) => {
+                const div = document.createElement('div');
+                div.classList.add('question');
+                div.innerHTML = `<p>${index + 1}. ${data.question}</p>` +
+                    data.options.map(opt => `<label><input type="radio" name="question${index}" value="${opt}"> ${opt}</label>`).join('<br>');
+                container.appendChild(div);
+            });
         }
-        break;
-      }
-    }
-  });
 
-  const resultDiv = document.getElementById("result");
-  resultDiv.innerHTML = `<h3>Your score is ${score} out of 3</h3>`;
-}
-</script>
+        function submitQuiz() {
+            let score = 0;
+            quizData.forEach((data, index) => {
+                const selected = document.querySelector(`input[name="question${index}"]:checked`);
+                if (selected && selected.value === data.answer) {
+                    score++;
+                }
+            });
+            alert(`You scored ${score} out of ${quizData.length}`);
+        }
+
+        loadQuiz();
+    </script>
 </body>
 </html>
-
-
-### Explanation:
-1. **HTML Structure:**
-   - A header (`<h2>`) describes the application.
-   - Each question is placed within a `div` with class `question`. Options are provided as radio buttons for single-choice answers.
-   - A button `Submit Answers` is used to trigger the score evaluation.
-
-2. **CSS Styling:**
-   - Basic styles are provided for readability and spacing.
-
-3. **JavaScript Functionality:**
-   - The `submitQuiz` function aggregates correct answers into an object and tallies the scores based on the user’s selections.
-   - Scores are displayed in a div (`#result`) below the questions.
-
-This code combines simplicity and functionality to meet the requirements of the provided brief.
