@@ -1,83 +1,83 @@
-Certainly! Below is a simple yet functional single-page HTML + JavaScript application that meets your specifications. It displays a brief and a list of attachments in an intuitive format.
+Below is a simple HTML page with embedded JavaScript that functions as a quiz app. This quiz consists of three questions and displays the final score upon completion.
 
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Brief Display App</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            padding: 0;
-            background: #f4f4f4;
-        }
-        .header {
-            background: #007BFF;
-            color: #ffffff;
-            padding: 10px 20px;
-            text-align: center;
-        }
-        .content {
-            background: white;
-            padding: 20px;
-            margin-top: 10px;
-        }
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        li {
-            margin-bottom: 10px;
-            border-bottom: 1px solid #ccc;
-            padding-bottom: 10px;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simple Quiz App</title>
+<style>
+  body { font-family: Arial, sans-serif; padding: 20px; }
+  .question { margin-bottom: 20px; }
+  .result { margin-top: 20px; }
+</style>
 </head>
 <body>
-    <div class="header">
-        Simple Brief Display App
-    </div>
-    <div class="content" id="briefContent">
-        <h2>Brief</h2>
-        <p>This page is designed to display a brief and a list of attachments. It uses HTML, CSS, and JavaScript.</p>
-        <h2>Attachments</h2>
-        <ul id="attachmentList">
-            <!-- Attachment items will be added here -->
-        </ul>
-    </div>
+<h2>Simple Quiz App</h2>
+<div id="quiz">
+  <div class="question">
+    <p>What is the capital of France?</p>
+    <input type="radio" name="q1" value="Paris" id="q1a"><label for="q1a">Paris</label><br>
+    <input type="radio" name="q1" value="London" id="q1b"><label for="q1b">London</label><br>
+    <input type="radio" name="q1" value="Rome" id="q1c"><label for="q1c">Rome</label>
+  </div>
+  <div class="question">
+    <p>What is 3 + 2?</p>
+    <input type="radio" name="q2" value="4" id="q2a"><label for="q2a">4</label><br>
+    <input type="radio" name="q2" value="5" id="q2b"><label for="q2b">5</label><br>
+    <input type="radio" name="q2" value="6" id="q2c"><label for="q2c">6</label>
+  </div>
+  <div class="question">
+    <p>Which planet is known as the Red Planet?</p>
+    <input type="radio" name="q3" value="Mars" id="q3a"><label for="q3a">Mars</label><br>
+    <input type="radio" name="q3" value="Jupiter" id="q3b"><label for="q3b">Jupiter</label><br>
+    <input type="radio" name="q3" value="Saturn" id="q3c"><label for="q3c">Saturn</label>
+  </div>
+  <button onclick="submitQuiz()">Submit Answers</button>
+  <div id="result" class="result"></div>
+</div>
 
-    <script>
-        // JavaScript to add attachment items to the list
-        document.addEventListener('DOMContentLoaded', function() {
-            var attachments = [
-                { name: 'Attachment1.pdf', link: 'http://example.com/attachment1.pdf' },
-                { name: 'Attachment2.jpg', link: 'http://example.com/attachment2.jpg' },
-                { name: 'Attachment3.docx', link: 'http://example.com/attachment3.docx' }
-            ];
+<script>
+function submitQuiz() {
+  const answers = {
+    q1: "Paris",
+    q2: "5",
+    q3: "Mars"
+  };
 
-            var list = document.getElementById('attachmentList');
+  let score = 0;
+  Object.keys(answers).forEach((key, index) => {
+    const radios = document.getElementsByName(key);
+    for (let radio of radios) {
+      if (radio.checked) {
+        if (radio.value === answers[key]) {
+          score++;
+        }
+        break;
+      }
+    }
+  });
 
-            attachments.forEach(function(attachment) {
-                var listItem = document.createElement('li');
-                var link = document.createElement('a');
-                link.href = attachment.link;
-                link.innerText = attachment.name;
-                listItem.appendChild(link);
-                list.appendChild(listItem);
-            });
-        });
-    </script>
+  const resultDiv = document.getElementById("result");
+  resultDiv.innerHTML = `<h3>Your score is ${score} out of 3</h3>`;
+}
+</script>
 </body>
 </html>
 
 
 ### Explanation:
-- The `<style>` tag contains minimal CSS to keep the application readable and visually pleasant.
-- The JavaScript is embedded within `<script>` tags as per requirements.
-- When the document is fully loaded, it dynamically populates the list of attachments using JavaScript.
-- The list of attachments is clearly shown, and each is a clickable link (note: these links are examples and not actual working links).
+1. **HTML Structure:**
+   - A header (`<h2>`) describes the application.
+   - Each question is placed within a `div` with class `question`. Options are provided as radio buttons for single-choice answers.
+   - A button `Submit Answers` is used to trigger the score evaluation.
 
-This HTML file can be saved and opened in any modern browser to view the application functioning.
+2. **CSS Styling:**
+   - Basic styles are provided for readability and spacing.
+
+3. **JavaScript Functionality:**
+   - The `submitQuiz` function aggregates correct answers into an object and tallies the scores based on the user’s selections.
+   - Scores are displayed in a div (`#result`) below the questions.
+
+This code combines simplicity and functionality to meet the requirements of the provided brief.
