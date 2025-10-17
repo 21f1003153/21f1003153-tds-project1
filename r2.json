@@ -1,0 +1,11 @@
+{
+  "email": "21f1003153@ds.study.iitm.ac.in",
+  "secret": "<mangojelly>",
+  "task": "21f1003153-tds-project1",
+  "round": 2,
+  "nonce": "xyz789",
+  "brief": "Generate a minimal quiz app",
+  "evaluation_url": "https://example.com",
+  "attachments": [],
+  "checks": []
+}
