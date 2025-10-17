@@ -1,6 +1,9 @@
 # 🎯 TDS Project 1 – LLM-Generated Web App  
 
-[![Live on GitHub Pages](https://img.shields.io/badge/🟢%20Live%20on-GitHub%20Pages-blue?style=for-the-badge)](https://21f1003153.github.io/21f1003153-tds-project1/)  
+[![Live on GitHub Pages](https://img.shields.io/badge/🟢%20LIVE%20ON-GitHub%20Pages-blue?style=for-the-badge)](https://21f1003153.github.io/21f1003153-tds-project1/)  
+
+↗️  
+↗️  
 
 ---
 
@@ -13,8 +16,12 @@ The system accepts a project *brief*, uses a **Large Language Model (via AIPipe 
 
 ## 🚀 Live Deployment  
 
-**🌐 App URL:**  
-➡️ [https://21f1003153.github.io/21f1003153-tds-project1/](https://21f1003153.github.io/21f1003153-tds-project1/)  
+| Type                                | URL                                                                                                            |
+| ----------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| **API Endpoint (Vercel)**           | [https://21f1003153-tds-project1.vercel.app/task](https://21f1003153-tds-project1.vercel.app/task)             |
+| **GitHub Repository**               | [https://github.com/21f1003153/21f1003153-tds-project1](https://github.com/21f1003153/21f1003153-tds-project1) |
+| **Deployed Web App (GitHub Pages)** | [https://21f1003153.github.io/21f1003153-tds-project1/](https://21f1003153.github.io/21f1003153-tds-project1/) |
+
 
 Each submission automatically:  
 1. Generates an HTML+JavaScript app from a new task brief.  
@@ -26,21 +33,27 @@ Each submission automatically:
 
 ## ⚙️ Tech Stack  
 
-| Component | Technology Used |
-|------------|-----------------|
-| **Backend** | Python (FastAPI + requests) |
-| **LLM Service** | AIPipe (OpenAI-compatible endpoint) |
-| **Deployment** | GitHub Actions + GitHub Pages |
-| **Frontend** | Auto-generated HTML, CSS & JavaScript |
+| Component                 | Technology Used                     |
+| ------------------------- | ----------------------------------- |
+| **Backend**               | Python (FastAPI + requests)         |
+| **Hosting**               | Vercel                              |
+| **Frontend Generation**   | AIPipe / OpenAI API                 |
+| **Repository Automation** | GitHub REST API                     |
+| **Deployment**            | GitHub Pages                        |
+| **Secrets & Config**      | .env + Vercel Environment Variables |
+
 
 ---
 
-## 🔄 Core Flow  
+## 🔄 Workflow  
 
-1. **Brief Received** → Input text and attachments describe the app goal.  
-2. **LLM Generation** → The `generate_app_from_brief()` helper calls the AIPipe model to produce HTML.  
-3. **Save + Commit** → The output is written as `index.html` and committed to the repo.  
-4. **Deploy + Notify** → GitHub Pages hosts the site; evaluator receives the URLs and commit SHA.  
+1. **POST `/task` (JSON)** → Request includes:  
+   - `email`, `secret`, `task`, `round`, `brief`, and optional `attachments`.  
+2. **Secret Validation** → The app verifies `email` + `secret` from `secrets.json`.  
+3. **App Generation** → Uses the LLM (via AIPipe API) to create a fully working HTML + JavaScript app.  
+4. **GitHub Commit + Deploy** → Pushes generated files to the repo and enables GitHub Pages automatically.  
+5. **Evaluator Callback** → Sends a JSON response to the evaluator with:  
+   - `repo_url`, `pages_url`, and `commit_sha`.  
 
 ---
 
@@ -49,7 +62,7 @@ Each submission automatically:
 Currently deployed example:  
 An **interactive quiz app** with the following features:  
 - Radio-button multiple-choice questions  
-- Instant scoring on submit  
+- Scoring logic + “Retake Quiz” button  
 - Clean, minimal design  
 - Automatic hosting via GitHub Pages  
 
@@ -59,16 +72,16 @@ An **interactive quiz app** with the following features:
 
 **Monalisa Kisku**  
 🎓 _Student ID: 21f1003153_  
-💼 _TDS Project – Stage 2: LLM App Deployment_  
+💼 _TDS Project – LLM App Deployment via FastAPI + Vercel_  
 
 ---
 
 ### 🏁 Project Highlights  
 
 ✅ Fully autonomous LLM workflow  
-✅ Live GitHub Pages deployment  
-✅ Hands-off CI/CD pipeline  
-✅ Minimal, elegant front-end generation  
+✅ Automatic deployment & reporting
+✅ Secure FastAPI endpoint with verification  
+✅ Fully hosted on Vercel + GitHub Pages 
 
 ---
 
