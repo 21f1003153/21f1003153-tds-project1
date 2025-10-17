@@ -7,57 +7,63 @@
 <style>
     body {
         font-family: Arial, sans-serif;
-        background-color: white;
-        color: #333;
+        background: white;
         display: flex;
-        align-items: center;
         justify-content: center;
-        padding: 20px;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
     }
-    #quiz-container {
+    .container {
         text-align: center;
-        border: 1px solid #ccc;
-        padding: 20px;
-        border-radius: 8px;
         width: 90%;
-        max-width: 500px;
+        max-width: 400px;
+    }
+    .quiz-header {
+        background-color: blue;
+        color: white;
+        padding: 10px;
+        margin-bottom: 20px;
     }
     .button {
-        background-color: #007bff;
+        background-color: blue;
         color: white;
         padding: 10px 20px;
-        text-align: center;
-        display: inline-block;
         border: none;
-        border-radius: 5px;
         cursor: pointer;
-        font-size: 16px;
         margin-top: 20px;
     }
-    input[type="radio"] {
-        margin: 10px 5px 10px 0;
+    .question {
+        margin-bottom: 15px;
+    }
+    .option {
+        display: block;
+        margin: 5px 0;
     }
 </style>
 </head>
 <body>
-<div id="quiz-container">
-    <h1 class="button">Quiz Time!</h1>
-    <form id="quiz-form">
-        <p>1. What is 2 + 2?</p>
-        <input type="radio" id="q1a1" name="q1" value="3"><label for="q1a1">3</label><br>
-        <input type="radio" id="q1a2" name="q1" value="4"><label for="q1a2">4</label><br>
-        <input type="radio" id="q1a3" name="q1" value="5"><label for="q1a3">5</label><br>
-
-        <p>2. What is the capital of France?</p>
-        <input type="radio" id="q2a1" name="q2" value="London"><label for="q2a1">London</label><br>
-        <input type="radio" id="q2a2" name="q2" value="Paris"><label for="q2a2">Paris</label><br>
-        <input type="radio" id="q2a3" name="q2" value="Rome"><label for="q2a3">Rome</label><br>
-
-        <p>3. Which is known as the ‘Land of the Rising Sun’?</p>
-        <input type="radio" id="q3a1" name="q3" value="India"><label for="q3a1">India</label><br>
-        <input type="radio" id="q3a2" name="q3" value="Japan"><label for="q3a2">Japan</label><br>
-        <input type="radio" id="q3a3" name="q3" value="Australia"><label for="q3a3">Australia</label><br>
-
+<div class="container">
+    <div class="quiz-header">Quiz Time!</div>
+    <form id="quizForm">
+        <div class="question">
+            <p>What is 5 + 3?</p>
+            <label class="option"><input type="radio" name="q1" value="8"> 8</label>
+            <label class="option"><input type="radio" name="q1" value="6"> 6</label>
+            <label class="option"><input type="radio" name="q1" value="5"> 5</label>
+        </div>
+        <div class="question">
+            <p>Which color results from mixing red and blue?</p>
+            <label class="option"><input type="radio" name="q2" value="Purple"> Purple</label>
+            <label class="option"><input type="radio" name="q2" value="Green"> Green</label>
+            <label class="option"><input type="radio" name="q2" value="Orange"> Orange</label>
+        </div>
+        <div class="question">
+            <p>What is the capital of France?</p>
+            <label class="option"><input type="radio" name="q3" value="Paris"> Paris</label>
+            <label class="option"><input type="radio" name="q3" value="London"> London</label>
+            <label class="option"><input type="radio" name="q3" value="Rome"> Rome</label>
+        </div>
         <button type="button" class="button" onclick="submitQuiz()">Submit</button>
     </form>
     <div id="result" style="display:none;">
@@ -65,22 +71,25 @@
         <button class="button" onclick="retakeQuiz()">Retake Quiz</button>
     </div>
 </div>
-<script>
-    function submitQuiz() {
-        var score = 0;
-        if (document.querySelector('input[name="q1"]:checked')?.value === "4") score++;
-        if (document.querySelector('input[name="q2"]:checked')?.value === "Paris") score++;
-        if (document.querySelector('input[name="q3"]:checked')?.value === "Japan") score++;
-        document.getElementById("quiz-form").style.display = "none";
-        document.getElementById("result").style.display = "block";
-        document.getElementById("scoreText").innerText = "Your score is: " + score + "/3";
-    }
 
-    function retakeQuiz() {
-        document.getElementById("quiz-form").style.display = "block";
-        document.getElementById("result").style.display = "none";
-        document.querySelectorAll('input[type="radio"]').forEach(input => input.checked = false);
-    }
+<script>
+function submitQuiz() {
+    var score = 0;
+    if(document.querySelector('input[name="q1"]:checked')?.value === "8") score++;
+    if(document.querySelector('input[name="q2"]:checked')?.value === "Purple") score++;
+    if(document.querySelector('input[name="q3"]:checked')?.value === "Paris") score++;
+    
+    document.getElementById("quizForm").style.display = "none";
+    document.getElementById("result").style.display = "block";
+    
+    document.getElementById("scoreText").innerHTML = "Your score is: " + score + "/3";
+}
+
+function retakeQuiz() {
+    document.getElementById("quizForm").style.display = "block";
+    document.getElementById("result").style.display = "none";
+    document.getElementById("quizForm").reset();
+}
 </script>
 </body>
 </html>
