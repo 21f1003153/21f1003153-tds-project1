@@ -2,39 +2,39 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Quiz App</title>
 <style>
   body {
     font-family: Arial, sans-serif;
     background-color: white;
+    margin: 0;
+    padding: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    margin: 0;
+    overflow: hidden;
   }
   .container {
-    width: 90%;
-    max-width: 600px;
     text-align: center;
   }
   .button {
-    background-color: blue;
+    background-color: #007BFF;
     color: white;
-    padding: 10px 15px;
     border: none;
+    padding: 10px 20px;
+    margin: 20px 0;
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
   }
-  .question {
-    margin-bottom: 20px;
-  }
   .question label {
     display: block;
-    text-align: left;
-    margin: 5px;
+    margin: 10px;
+  }
+  .results {
+    font-size: 18px;
+    margin-top: 20px;
   }
 </style>
 </head>
@@ -43,46 +43,46 @@
   <button class="button">Quiz Time!</button>
   <form id="quizForm">
     <div class="question">
-      <p>What is the capital of France?</p>
-      <label><input type="radio" name="question1" value="Paris"> Paris</label>
-      <label><input type="radio" name="question1" value="London"> London</label>
-      <label><input type="radio" name="question1" value="Madrid"> Madrid</label>
+      <p>1. What is the capital of France?</p>
+      <label><input type="radio" name="q1" value="Paris"> Paris</label>
+      <label><input type="radio" name="q1" value="London"> London</label>
+      <label><input type="radio" name="q1" value="Madrid"> Madrid</label>
     </div>
     <div class="question">
-      <p>What does HTML stand for?</p>
-      <label><input type="radio" name="question2" value="Hyperlinks and Text Markup Language"> Hyperlinks and Text Markup Language</label>
-      <label><input type="radio" name="question2" value="Home Tool Markup Language"> Home Tool Markup Language</label>
-      <label><input type="radio" name="question2" value="Hyper Text Markup Language"> Hyper Text Markup Language</label>
+      <p>2. Which is the largest ocean on Earth?</p>
+      <label><input type="radio" name="q2" value="Atlantic"> Atlantic Ocean</label>
+      <label><input type="radio" name="q2" value="Indian"> Indian Ocean</label>
+      <label><input type="radio" name="q2" value="Pacific"> Pacific Ocean</label>
     </div>
     <div class="question">
-      <p>Who is known for the theory of relativity?</p>
-      <label><input type="radio" name="question3" value="Isaac Newton"> Isaac Newton</label>
-      <label><input type="radio" name="question3" value="Albert Einstein"> Albert Einstein</label>
-      <label><input type="radio" name="question3" value="Nikola Tesla"> Nikola Tesla</label>
+      <p>3. What gas do plants absorb from the environment?</p>
+      <label><input type="radio" name="q3" value="Oxygen"> Oxygen</label>
+      <label><input type="radio" name="q3" value="Carbon Dioxide"> Carbon Dioxide</label>
+      <label><input type="radio" name="q3" value="Nitrogen"> Nitrogen</label>
     </div>
     <button type="button" class="button" onclick="submitQuiz()">Submit</button>
   </form>
-  <div id="result" style="display:none;">
-    <p id="scoreText"></p>
-    <button class="button" onclick="resetQuiz()">Retake Quiz</button>
-  </div>
+  <div class="results" id="results"></div>
 </div>
 <script>
   function submitQuiz() {
-    var score = 0;
-    if (document.querySelector('input[name="question1"]:checked')?.value === "Paris") score++;
-    if (document.querySelector('input[name="question2"]:checked')?.value === "Hyper Text Markup Language") score++;
-    if (document.querySelector('input[name="question3"]:checked')?.value === "Albert Einstein") score++;
-
-    document.getElementById("quizForm").style.display = "none";
-    document.getElementById("result").style.display = "block";
-    document.getElementById("scoreText").textContent = "Your score: " + score + "/3";
+    const answers = { q1: "Paris", q2: "Pacific", q3: "Carbon Dioxide" };
+    let score = 0;
+    Object.keys(answers).forEach(q => {
+      const userAnswer = document.querySelector(`input[name="${q}"]:checked`);
+      if (userAnswer && userAnswer.value === answers[q]) {
+        score++;
+      }
+    });
+    
+    const resultsDiv = document.getElementById("results");
+    resultsDiv.innerHTML = `<p>You scored ${score} out of 3.</p>
+                            <button class="button" onclick="resetQuiz()">Retake Quiz</button>`;
   }
-
+  
   function resetQuiz() {
-    document.getElementById("quizForm").style.display = "block";
-    document.getElementById("result").style.display = "none";
     document.getElementById("quizForm").reset();
+    document.getElementById("results").innerHTML = "";
   }
 </script>
 </body>
