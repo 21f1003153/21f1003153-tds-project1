@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz App</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+  .container {
+    text-align: center;
+    width: 90%;
+    max-width: 600px;
+  }
+  .button {
+    background-color: #0044cc;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin-top: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+  }
+  .quiz-header {
+    color: white;
+    background-color: #0044cc;
+    padding: 10px 0;
+    font-size: 24px;
+    border-radius: 5px 5px 0 0;
+  }
+  .question {
+    text-align: left;
+    margin-top: 15px;
+  }
+  label {
+    display: block;
+    margin: 5px 0px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="quiz-header">Quiz Time!</div>
+
+  <!-- Questions Section -->
+  <form id="quizForm">
+    <div class="question">
+      <p>1. What color is the sun at noon?</p>
+      <label><input type="radio" name="question1" value="Yellow"> Yellow</label>
+      <label><input type="radio" name="question1" value="Red"> Red</label>
+      <label><input type="radio" name="question1" value="Blue"> Blue</label>
+    </div>
+    
+    <div class="question">
+      <p>2. What is the capital of France?</p>
+      <label><input type="radio" name="question2" value="Paris"> Paris</label>
+      <label><input type="radio" name="question2" value="Madrid"> Madrid</label>
+      <label><input type="radio" name="question2" value="Berlin"> Berlin</label>
+    </div>
+    
+    <div class="question">
+      <p>3. What is 5 + 3?</p>
+      <label><input type="radio" name="question3" value="8"> 8</label>
+      <label><input type="radio" name="question3" value="9"> 9</label>
+      <label><input type="radio" name="question3" value="6"> 6</label>
+    </div>
+
+    <button type="button" class="button" onclick="submitQuiz()">Submit</button>
+  </form>
+
+  <div id="result" style="display:none;">
+    <p id="scoreText"></p>
+    <button class="button" onclick="retakeQuiz()">Retake Quiz</button>
+  </div>
+</div>
+
+<script>
+  function submitQuiz() {
+    var score = 0;
+    if (document.querySelector('input[name="question1"]:checked')?.value === "Yellow") score++;
+    if (document.querySelector('input[name="question2"]:checked')?.value === "Paris") score++;
+    if (document.querySelector('input[name="question3"]:checked')?.value === "8") score++;
+
+    var scoreText = document.getElementById('scoreText');
+    scoreText.textContent = `Your score: ${score} out of 3`;
+    
+    document.getElementById('quizForm').style.display = 'none';
+    document.getElementById('result').style.display = 'block';
+  }
+
+  function retakeQuiz() {
+    document.getElementById('quizForm').style.display = 'block';
+    document.getElementById('result').style.display = 'none';
+    document.getElementById('quizForm').reset();
+  }
+</script>
+</body>
+</html>
