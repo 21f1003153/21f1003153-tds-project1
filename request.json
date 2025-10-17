@@ -1,0 +1,17 @@
+
+{
+  "email": "21f1003153@ds.study.iitm.ac.in",
+  "secret": "mangojelly",
+  "task": "21f1003153-tds-project1",
+  "round": 1,
+  "nonce": "xyz789",
+  "brief": "Create a simple interactive quiz app with 3 questions and a final score display.",
+  "checks": [],
+  "evaluation_url": "https://21f1003153-tds-project1.vercel.app/task",
+  "attachments": [
+    {
+      "name": "hello.txt",
+      "url": "data:text/plain;base64,SGVsbG8sIE1vbmFsaXNhIQ=="
+    }
+  ]
+}
